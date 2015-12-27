@@ -10,7 +10,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * 对3.png 图片做个提交验证
+ * @author Barry
+ *
+ */
 public class MainActivity extends Activity {
 
 	@Override
@@ -19,7 +23,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 	}
-
+	/**点击提交按钮*/
 	public void submit(View v) {
 
 		EditText pwd = (EditText) this.findViewById(R.id.et_pwd);

@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.view.View;
+import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
@@ -16,6 +14,18 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
+/**
+ * 用ArrayAdapter 为它们写入数据<br>
+ * AutoCompleteTextView:自动提示文本框<br>
+ * Spinner :下拉框<br>
+ * 
+ * 用SimpleAdapter 为它们写入数据<br>
+ * ListView :ListView<br>
+ * GridView :GridView<br>
+ * 
+ * @author Barry
+ * 
+ */
 public class MainActivity extends Activity {
 
 	@Override
@@ -23,20 +33,19 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-	 
-		  createAutoCompleteTextView();
-		  
-		 createSpinner();
-		  
-		 createListView();
-		  
-		  createGridView();
-		  
+		createAutoCompleteTextView();
 
-		//testBaseAdapter();
+		createSpinner();
+
+		createListView();
+
+		createGridView();
+
+		// testBaseAdapter();
 
 	}
 
+	/** 做出4.2.png图片的功能 */
 	private void testBaseAdapter() {
 		ListView lvSed = (ListView) this.findViewById(R.id.lv_sed);
 
@@ -53,7 +62,7 @@ public class MainActivity extends Activity {
 		// 创建适配器
 		BaseAdapter adapter = new SimpleAdapter(MainActivity.this, data,
 				R.layout.lv_person, new String[] { "name", "id", "phone" },
-				new int[] {R.id.tv_name,R.id.iv_pid,R.id.tv_phone});
+				new int[] { R.id.tv_name, R.id.iv_pid, R.id.tv_phone });
 		// 设置适配器
 		lvSed.setAdapter(adapter);
 	}
