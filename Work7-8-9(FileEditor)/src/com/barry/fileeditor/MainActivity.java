@@ -22,12 +22,20 @@ import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * 文件管理器<br>
+ * 对手机目录的查看复制粘贴删除查看等基本的操作
+ * @author Barry
+ *
+ */
 public class MainActivity extends Activity {
-
+	//需要操作的数据
 	private List<FileBean> datas = new ArrayList<FileBean>();
+	//页面显示的路径
 	private TextView tv_path;
+	//显示文件夹或文件
 	private ListView lv_listView;
+	//Menu的操作
 	private GridView gv_menu;
 
 	@Override
@@ -40,7 +48,7 @@ public class MainActivity extends Activity {
 		initData("/");
 		initEvent();
 	}
-
+	/**初始化GridView 为其添加Menu的操作*/
 	private void initMenu() {
 		// 1准备数据
 		List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
@@ -61,7 +69,9 @@ public class MainActivity extends Activity {
 
 	}
 
+	/**设置ListView 和 GridView的点击事件*/
 	private void initEvent() {
+		// 点击listview的item
 		lv_listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -82,7 +92,7 @@ public class MainActivity extends Activity {
 
 			}
 		});
-		
+		// listView 的长按删除或复制
 		lv_listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
@@ -90,72 +100,78 @@ public class MainActivity extends Activity {
 					int position, long id) {
 				FileAdapter adapter = (FileAdapter) parent.getAdapter();
 				final FileBean fileBean = (FileBean) adapter.getItem(position);
-				final File file=new File(fileBean.getFilePath());
-				Builder builder =new Builder(MainActivity.this);
+				final File file = new File(fileBean.getFilePath());
+				Builder builder = new Builder(MainActivity.this);
 				builder.setTitle("操作");
-				builder.setItems(new String[]{"复制","删除"}, new OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface arg0, int witch) {
-						switch (witch) {
-						case 0://复制
-							FileManager.CopyPath = FileManager.CurrPath;
-							showTips("复制");
-							break;
-						case 1://删除
-							if(FileManager.getInstance().deleteFile(file))
-								showTips("删除成功");
-							else
-								showTips("删除失败");
-							break;
-						}
-					}
-				}).show();
+				builder.setItems(new String[] { "复制", "删除" },
+						new OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface arg0, int witch) {
+								switch (witch) {
+								case 0:// 复制
+									FileManager.CopyPath = FileManager.CurrPath;
+									showTips("复制");
+									break;
+								case 1:// 删除
+									if (FileManager.getInstance().deleteFile(
+											file))
+										showTips("删除成功");
+									else
+										showTips("删除失败");
+									break;
+								}
+							}
+						}).show();
 				return true;
 			}
 		});
-		
-		
+
+		// 点击GridView的item
 		gv_menu.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				switch (position) {
-				case 0://点击手机
+				case 0:// 点击手机
 					initData("/");
 					break;
-				case 1:
+				case 1:// 点击sd卡
 					String sdCardPath = FileManager.getSdCard();
-					if(sdCardPath==null)
+					if (sdCardPath == null)
 						showTips("sd卡不存在");
 					else
 						initData(sdCardPath);
 					break;
-				case 2://新建
-					Builder builder =new Builder(MainActivity.this);
+				case 2:// 新建
+					Builder builder = new Builder(MainActivity.this);
 					builder.setTitle("操作");
-					final View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.dailog_layout, null);
+					final View v = LayoutInflater.from(MainActivity.this)
+							.inflate(R.layout.dailog_layout, null);
 					builder.setView(v);
-					
+
 					builder.setNegativeButton("取消", null);
 					builder.setPositiveButton("确定", new OnClickListener() {
-						
+
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
-							TextView tv_name = (TextView) v.findViewById(R.id.tv_name);
-							RadioGroup rg_new =(RadioGroup) v.findViewById(R.id.rg_new);
-							File file=new File(FileManager.CurrPath,tv_name.getText().toString());
-							boolean flag=true;
+							TextView tv_name = (TextView) v
+									.findViewById(R.id.tv_name);
+							RadioGroup rg_new = (RadioGroup) v
+									.findViewById(R.id.rg_new);
+							File file = new File(FileManager.CurrPath, tv_name
+									.getText().toString());
+							boolean flag = true;
 							switch (rg_new.getCheckedRadioButtonId()) {
 							case R.id.rb_file:
-								flag=FileManager.createFile(file);
+								flag = FileManager.createFile(file);
 								break;
 							case R.id.rb_folder:
-								flag=FileManager.createFolder(file);
+								flag = FileManager.createFolder(file);
 								break;
 							}
-							if(flag)
+							if (flag)
 								showTips("创建成功");
 							else
 								showTips("创建失败");
@@ -163,41 +179,41 @@ public class MainActivity extends Activity {
 					});
 					builder.show();
 					break;
-				case 3://粘贴
-					if(FileManager.getInstance().copyFile())
+				case 3:// 粘贴
+					if (FileManager.getInstance().copyFile())
 						showTips("粘贴成功");
 					else
 						showTips("粘贴失败");
 					break;
-				case 4://退出
-					Builder builder2 =new Builder(MainActivity.this);
-					 builder2.setTitle("退出吗？");
-					 builder2.setPositiveButton("取消", null).setNegativeButton("确定", new OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							finish();
-						}
-					}).show();
+				case 4:// 退出
+					Builder builder2 = new Builder(MainActivity.this);
+					builder2.setTitle("退出吗？");
+					builder2.setPositiveButton("取消", null)
+							.setNegativeButton("确定", new OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface arg0,
+										int arg1) {
+									finish();
+								}
+							}).show();
 					break;
- 
+
 				}
 			}
 		});
 	}
 
+	/** 打印输出d */
 	private void showTips(String string) {
 		Toast.makeText(MainActivity.this, string, Toast.LENGTH_SHORT).show();
-		;
 	}
 
+	/** 重新得到文件目录中的数据并对其进行刷新 */
 	private void initData(String path) {
-
 		datas = FileManager.getFileLists(path);
-
 		FileAdapter adapter = new FileAdapter(datas, MainActivity.this);
 		lv_listView.setAdapter(adapter);
-
 		tv_path.setText(path);
 		FileManager.CurrPath = path;
 	}

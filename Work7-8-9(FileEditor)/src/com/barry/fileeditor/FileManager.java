@@ -12,6 +12,12 @@ import java.util.List;
 
 import android.os.Environment;
 
+/**
+ * 文件管理器管理类 (单例)
+ * 
+ * @author Barry
+ *
+ */
 public class FileManager {
 	public static final String BACK_TO_ROOT = "返回到根目录";
 	public static final String BACK_TO_UP = "返回上一层";
@@ -30,6 +36,7 @@ public class FileManager {
 		return fileManager;
 	}
 
+	/**得到当前目录的文件列表	 */
 	public static List<FileBean> getFileLists(String path) {
 		List<FileBean> datas = new ArrayList<FileBean>();
 
@@ -53,11 +60,11 @@ public class FileManager {
 		}
 		return datas;
 	}
-
+	/**得到sd卡的根目录*/
 	public static String getSdCard() {
 		return Environment.getRootDirectory().getPath();
 	}
-
+	/**点击menu的删除文件操作*/
 	public boolean deleteFile(File file) {
 		if (file.isDirectory()) {
 			File[] listFiles = file.listFiles();
@@ -69,7 +76,7 @@ public class FileManager {
 		file.delete();
 		return false;
 	}
-
+	/**创建文件操作*/
 	public static boolean createFile(File file) {
 		try {
 			return file.createNewFile();
@@ -79,11 +86,11 @@ public class FileManager {
 		}
 		return false;
 	}
-
+	/**创建文件夹*/
 	public static boolean createFolder(File file) {
 		return file.mkdir();
 	}
-
+	/**复制文件   更具当前目录与要复制的目录 如果是文件夹要用到递归*/
 	public boolean copyFile() {
 		File srcFile = new File(FileManager.CopyPath);
 		File tagFile = new File(FileManager.CurrPath);
@@ -94,7 +101,7 @@ public class FileManager {
 		}
 		return false;
 	}
-
+	/**复制文件的递归操作*/
 	private boolean copyFile(File srcFile, File tagFile)
 			throws FileNotFoundException {
 

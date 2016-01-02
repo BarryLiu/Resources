@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/**
+ * 文件管理器的适配器
+ * @author Barry
+ *
+ */
 public class FileAdapter extends BaseAdapter {
 	private List<FileBean> datas;
 	private Context context;
