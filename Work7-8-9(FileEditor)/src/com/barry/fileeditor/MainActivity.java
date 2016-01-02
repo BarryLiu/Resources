@@ -22,20 +22,22 @@ import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 /**
  * 文件管理器<br>
  * 对手机目录的查看复制粘贴删除查看等基本的操作
+ * 
  * @author Barry
- *
+ * 
  */
 public class MainActivity extends Activity {
-	//需要操作的数据
+	// 需要操作的数据
 	private List<FileBean> datas = new ArrayList<FileBean>();
-	//页面显示的路径
+	// 页面显示的路径
 	private TextView tv_path;
-	//显示文件夹或文件
+	// 显示文件夹或文件
 	private ListView lv_listView;
-	//Menu的操作
+	// Menu的操作
 	private GridView gv_menu;
 
 	@Override
@@ -48,7 +50,8 @@ public class MainActivity extends Activity {
 		initData("/");
 		initEvent();
 	}
-	/**初始化GridView 为其添加Menu的操作*/
+
+	/** 初始化GridView 为其添加Menu的操作 */
 	private void initMenu() {
 		// 1准备数据
 		List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
@@ -69,7 +72,7 @@ public class MainActivity extends Activity {
 
 	}
 
-	/**设置ListView 和 GridView的点击事件*/
+	/** 设置ListView 和 GridView的点击事件 */
 	private void initEvent() {
 		// 点击listview的item
 		lv_listView.setOnItemClickListener(new OnItemClickListener() {
@@ -110,7 +113,7 @@ public class MainActivity extends Activity {
 							public void onClick(DialogInterface arg0, int witch) {
 								switch (witch) {
 								case 0:// 复制
-									FileManager.CopyPath = FileManager.CurrPath;
+									FileManager.CopyPath = fileBean.getFilePath();
 									showTips("复制");
 									break;
 								case 1:// 删除
@@ -156,11 +159,11 @@ public class MainActivity extends Activity {
 
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
-							TextView tv_name = (TextView) v
-									.findViewById(R.id.tv_name);
+							TextView et_name = (TextView) v
+									.findViewById(R.id.et_name);
 							RadioGroup rg_new = (RadioGroup) v
 									.findViewById(R.id.rg_new);
-							File file = new File(FileManager.CurrPath, tv_name
+							File file = new File(FileManager.CurrPath, et_name
 									.getText().toString());
 							boolean flag = true;
 							switch (rg_new.getCheckedRadioButtonId()) {
@@ -180,8 +183,12 @@ public class MainActivity extends Activity {
 					builder.show();
 					break;
 				case 3:// 粘贴
-					if (FileManager.getInstance().copyFile())
+					if (FileManager.CopyPath == null)
+						showTips("没有要复制的内容");
+					else if (FileManager.getInstance().copyFile()){
 						showTips("粘贴成功");
+						initData(FileManager.CurrPath);						
+					}
 					else
 						showTips("粘贴失败");
 					break;
@@ -211,11 +218,13 @@ public class MainActivity extends Activity {
 
 	/** 重新得到文件目录中的数据并对其进行刷新 */
 	private void initData(String path) {
+		tv_path.setText(path);
+		FileManager.CurrPath = path;
+		
 		datas = FileManager.getFileLists(path);
 		FileAdapter adapter = new FileAdapter(datas, MainActivity.this);
 		lv_listView.setAdapter(adapter);
-		tv_path.setText(path);
-		FileManager.CurrPath = path;
+		
 	}
 
 	/** 找到控件并为其赋值 */
