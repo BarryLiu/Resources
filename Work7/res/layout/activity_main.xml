@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,9 +8,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <TableRow 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <Button 
+	        android:id="@+id/btn_one"
+	        android:layout_height="match_parent"
+	        android:layout_width="match_parent"
+	        android:layout_weight="1"
+	        android:onClick="click"
+	        android:text="第一题"/>
+	    <Button 
+	        android:id="@+id/btn_two"
+	        android:layout_height="match_parent"
+	        android:layout_width="match_parent"
+	        android:onClick="click"
+	        android:layout_weight="1"
+	        android:text="第二题"/>
+    </TableRow>
+    <TableRow 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <Button 
+	        android:id="@+id/btn_three"
+	        android:layout_height="match_parent"
+	        android:layout_width="match_parent"
+	        android:onClick="click"
+	        android:layout_weight="1"
+	        android:text="第三题"/>
+	    <Button 
+	        android:id="@+id/btn_four"
+	        android:layout_height="match_parent"
+	        android:layout_width="match_parent"
+	        android:onClick="click"
+	        android:layout_weight="1"
+	        android:text="第四题"/>
+    </TableRow>
+    
 
-</RelativeLayout>
+</TableLayout>
