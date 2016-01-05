@@ -7,5 +7,6 @@
     <string name="title_activity_two">TwoActivity</string>
     <string name="title_activity_three">ThreeActivity</string>
     <string name="title_activity_four">FourActivity</string>
+    <string name="title_activity_five">FiveActivity</string>
 
 </resources>

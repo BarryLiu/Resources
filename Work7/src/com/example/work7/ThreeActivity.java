@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
+/**
+ *  3.设置全局可读写模式，再次测试
+ * @author Barry
+ *
+ */
 public class ThreeActivity extends Activity {
 
 	@Override

@@ -45,7 +45,6 @@ public class FileManager {
 		if (!"/".equals(path)) {
 			FileBean btr = new FileBean("/", FileManager.BACK_TO_ROOT);
 			datas.add(btr);
-
 			FileBean btu = new FileBean(file.getParent(),
 					FileManager.BACK_TO_UP);
 			datas.add(btu);
@@ -82,18 +81,19 @@ public class FileManager {
 	}
 
 	/** 创建文件操作 */
-	public static boolean createFile(File file) {
+	public static boolean createFile(String fileName) {
+		File file = new File(FileManager.CurrPath,fileName );
 		try {
 			return file.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
 
 	/** 创建文件夹 */
-	public static boolean createFolder(File file) {
+	public static boolean createFolder(String fileName) {
+		File file = new File(FileManager.CurrPath,fileName);
 		return file.mkdir();
 	}
 

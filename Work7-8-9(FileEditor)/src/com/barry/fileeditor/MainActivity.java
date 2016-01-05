@@ -26,9 +26,7 @@ import android.widget.Toast;
 /**
  * 文件管理器<br>
  * 对手机目录的查看复制粘贴删除查看等基本的操作
- * 
  * @author Barry
- * 
  */
 public class MainActivity extends Activity {
 	// 需要操作的数据
@@ -113,7 +111,8 @@ public class MainActivity extends Activity {
 							public void onClick(DialogInterface arg0, int witch) {
 								switch (witch) {
 								case 0:// 复制
-									FileManager.CopyPath = fileBean.getFilePath();
+									FileManager.CopyPath = fileBean
+											.getFilePath();
 									showTips("复制");
 									break;
 								case 1:// 删除
@@ -163,20 +162,21 @@ public class MainActivity extends Activity {
 									.findViewById(R.id.et_name);
 							RadioGroup rg_new = (RadioGroup) v
 									.findViewById(R.id.rg_new);
-							File file = new File(FileManager.CurrPath, et_name
-									.getText().toString());
 							boolean flag = true;
 							switch (rg_new.getCheckedRadioButtonId()) {
 							case R.id.rb_file:
-								flag = FileManager.createFile(file);
+								flag = FileManager.createFile(et_name.getText()
+										.toString());
 								break;
 							case R.id.rb_folder:
-								flag = FileManager.createFolder(file);
+								flag = FileManager.createFolder(et_name
+										.getText().toString());
 								break;
 							}
-							if (flag)
+							if (flag) {
 								showTips("创建成功");
-							else
+								initData(FileManager.CurrPath);
+							} else
 								showTips("创建失败");
 						}
 					});
@@ -185,11 +185,10 @@ public class MainActivity extends Activity {
 				case 3:// 粘贴
 					if (FileManager.CopyPath == null)
 						showTips("没有要复制的内容");
-					else if (FileManager.getInstance().copyFile()){
+					else if (FileManager.getInstance().copyFile()) {
 						showTips("粘贴成功");
-						initData(FileManager.CurrPath);						
-					}
-					else
+						initData(FileManager.CurrPath);
+					} else
 						showTips("粘贴失败");
 					break;
 				case 4:// 退出
@@ -220,11 +219,11 @@ public class MainActivity extends Activity {
 	private void initData(String path) {
 		tv_path.setText(path);
 		FileManager.CurrPath = path;
-		
+
 		datas = FileManager.getFileLists(path);
 		FileAdapter adapter = new FileAdapter(datas, MainActivity.this);
 		lv_listView.setAdapter(adapter);
-		
+
 	}
 
 	/** 找到控件并为其赋值 */

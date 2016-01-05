@@ -52,8 +52,7 @@ public class TestActyivity extends Activity{
 	/**
 	 * 将数据写入系统默认位置
 	 * 
-	 * @param text
-	 *            要保存的字符
+	 * @param text 要保存的字符
 	 */
 	public void write(String text) {
 		try {
