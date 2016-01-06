@@ -43,6 +43,7 @@
 ###第三种方式,直接传递对象(需要别序列化)
 - Activity之间是不可以传递引用的,只可以传递数值
 - public class Student implements Serializable 
+
 ###第四种方式使用Parcelable
 - 安卓中特有的传递数值的方式
 - 使用的时候有两个步骤:第一个是将数据放入到Parcel中;第二是将数据从Parcel中取出来
