@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 /**
  * 文件管理器<br>
  * 对手机目录的查看复制粘贴删除查看等基本的操作
+ * 
  * @author Barry
  */
 public class MainActivity extends Activity {
@@ -85,12 +88,20 @@ public class MainActivity extends Activity {
 				if (file.canRead()) {
 					if (file.isDirectory())
 						initData(file.getPath());
-					else
-						showTips("不是文件夹不能打打开");
+					else {
+						Intent intent = ResUtils.getByMIME_Map(file);
+						if (intent != null)
+							try{
+								startActivity(intent);
+							}catch(Exception e){
+								showTips("没有打开它的程序");
+							}
+						else
+							showTips("这种文件不能打开");
+					}
 				} else {
 					showTips("没有读取的权限");
 				}
-
 			}
 		});
 		// listView 的长按删除或复制
@@ -117,9 +128,10 @@ public class MainActivity extends Activity {
 									break;
 								case 1:// 删除
 									if (FileManager.getInstance().deleteFile(
-											file))
+											file)) {
 										showTips("删除成功");
-									else
+										initData(FileManager.CurrPath);
+									} else
 										showTips("删除失败");
 									break;
 								}
@@ -177,7 +189,7 @@ public class MainActivity extends Activity {
 								showTips("创建成功");
 								initData(FileManager.CurrPath);
 							} else
-								showTips("创建失败");
+								showTips("创建失败，可能是权限不够");
 						}
 					});
 					builder.show();
