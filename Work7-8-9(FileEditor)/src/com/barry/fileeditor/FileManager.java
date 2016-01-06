@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.os.Environment;
@@ -58,6 +59,8 @@ public class FileManager {
 
 			datas.add(fb);
 		}
+		//文件夹与文件之间的排序操作
+		Collections.sort(datas);
 		return datas;
 	}
 
