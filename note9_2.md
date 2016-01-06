@@ -60,8 +60,8 @@
     </item>
 ##shape
 - 形状:计算机绘制的图,不需要外部的图片
-- <solid>:填充
-- <stroke>:描边
+- solid:填充
+- stroke:描边
 - corners:圆角
 ##layer-list
 - 层关系
