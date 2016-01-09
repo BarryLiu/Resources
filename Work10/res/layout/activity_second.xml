@@ -10,12 +10,7 @@
 	    android:id="@+id/et_text"
 	    android:hint="要操作的数据"
 	    />
-	<Button 
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:id="@+id/btn_createTable"
-	    android:text="创建表"
-	    />
+ 
 	<Button 
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -39,13 +34,6 @@
 	    android:layout_height="wrap_content"
 	    android:id="@+id/btn_remove"
 	    android:text="根据编号删除"
-	    />
-	
-	<Button 
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:id="@+id/btn_toSecond"
-	    android:text="跳到secondActivity中"
 	    />
 	
 </LinearLayout>
