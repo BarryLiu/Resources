@@ -1,4 +1,4 @@
-#9Shape,selector,样式
+#9Shape,selector,样式(style.xml)
 
 ##intent
 - 信使:用于组件和组件之间的传递信息
@@ -26,7 +26,11 @@
 
 
 
-
+#样式(style.xml) 
+		<!--如果parent 有的话就是一个样式,activity可用不同的样式,没有的话 可以让不同的控件有这样的属性 -->
+		<style name="DarkTheme" parent="Theme.AppCompat.NoActionBar" >
+        <item name="android:colorForeground">@color/foreground_material_dark_1</item>
+    </style>
 
 
 #安卓资源文件

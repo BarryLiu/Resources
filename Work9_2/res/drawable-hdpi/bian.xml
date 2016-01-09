@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+   
+    <!-- 描边外面的线 -->
+    <stroke 
+        android:color="@android:color/black"
+        android:width="1dp"/>
+ 	<!-- 颜色 -->
+ 	 <gradient 
+	    android:startColor="#ffffff"
+	    android:endColor="#000000"
+	    />  
+	 
+	 <!-- 填充颜色 -->
+ <!-- <solid 
+ 	    android:color="#222222"
+ 	    /> -->
+ 	    
+ 	<!-- 画四边的圆角， -->
+	<corners 
+	    android:radius="20dp"
+	    />
+</shape>
