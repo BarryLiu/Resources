@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
 	private Button btn_addUser;
 	private Button btn_zhuanZhan;
 	private Button btn_users;
+	 private Button btn_userslog;
 	private ListView lv_history;
 
 	@Override
@@ -46,7 +47,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		DBHelper helper =new DBHelper(MainActivity.this, "bank2.db", null, 1);
+		DBHelper helper =new DBHelper(MainActivity.this, DBHelper.DATABASE_NAME, null, 1);
 		db = helper.getWritableDatabase();
 		
 		initView();
@@ -106,17 +107,34 @@ public class MainActivity extends Activity {
 		// 点击转账跳到转账页面
 		setbtn_zhuanZhanLisenter();
 		
+		//跳到 SecondActivity查询用户
+		setbtnTiaoZhuan();
+		
+		//setShowLogLisenter();
+		
+	}
+	/**跳到SecondActivity	 */
+	private void setbtnTiaoZhuan() {
 		btn_users.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(MainActivity.this,SecondActivity.class);
+				 Intent intent =new Intent();
+				intent.setClass(MainActivity.this,SecondActivity.class);
 				
-				startActivity(intent);
+				startActivity(intent); 
 			}
 		});
-		
-		
+	}
+
+	private void setShowLogLisenter() {
+		btn_userslog.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				BankAccountDao.logUsers(db);
+			}
+		});
 	}
 	/**
 	 * 点击转账跳到转账页面
@@ -153,25 +171,41 @@ public class MainActivity extends Activity {
 						try {
 							db.beginTransaction(); //开启事务
 							
+							Object payUser[] = BankAccountDao.queryById(db,payId); 
+							Object toUser[] = BankAccountDao.queryById(db,toId);
+							if(payUser[0] ==null ||toUser[0] ==null ){ 
+								showTips(MainActivity.this, " 转账或者收款没有人 ");
+								return ; //有为空表示 转账或者收款没有人 
+							}
+							
 							Double money = Double.valueOf(moneyStr);
 							
-							Object payUser[] = BankAccountDao.queryById(db,payId);
 							Double payNewMoney=((Double)payUser[2])-money;
 							BankAccountDao.update(db,payId,(String)payUser[1],payNewMoney);
-							BankHistoryDao.insert(db,payId,money,(String)payUser[1],dataStr);
+							BankHistoryDao.insert(db,payId,-money,(String)payUser[1],dataStr);
 							
-							Object toUser[] = BankAccountDao.queryById(db,toId);
-							Double toNewMoney=((Double)payUser[2])+money;
+							Double toNewMoney=((Double)toUser[2])+money;
 							BankAccountDao.update(db,toId,(String)toUser[1],toNewMoney);
-							BankHistoryDao.insert(db,toId,-money,(String)toUser[1],dataStr);
+							BankHistoryDao.insert(db,toId,money,(String)toUser[1],dataStr);
+							
+							
+							if(payNewMoney<0.0 ){ 
+								showTips(MainActivity.this, "金额不足 ");
+								return ; //金额不足
+							}
 							
 							db.setTransactionSuccessful();  //成功
 							showTips(MainActivity.this, "转账成功");
+							
+							
 						} catch (NumberFormatException e) {
 							showTips(MainActivity.this, "转账失败");
 							e.printStackTrace();
+						}finally{
+							db.endTransaction(); //结束事务
 						}
-						db.endTransaction(); //结束事务
+						//转账成功
+						setAdapter();
 					}
 				});
 				builder.show();
@@ -224,6 +258,7 @@ public class MainActivity extends Activity {
 		btn_addUser = (Button)findViewById(R.id.btn_addUser);
 		btn_zhuanZhan =(Button)findViewById(R.id.btn_zhuanZhan);
 		btn_users =(Button)findViewById(R.id.btn_queryUsers);
+		//btn_userslog =(Button)findViewById(R.id.btn_userslog);
 		lv_history =(ListView)findViewById(R.id.lv_history);
 	}
 

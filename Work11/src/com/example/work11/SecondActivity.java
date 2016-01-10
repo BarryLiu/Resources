@@ -23,13 +23,13 @@ public class SecondActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_users);
 		
-		/*DBHelper helper =new DBHelper(SecondActivity.this, "bank2.db", null, 1);
+		 DBHelper helper =new DBHelper(SecondActivity.this, DBHelper.DATABASE_NAME, null, 1);
 		db = helper.getWritableDatabase();
 		
 		
 		initView();
 		
-		setAdapter();*/
+		setAdapter(); 
 	}
 
 	private void setAdapter() {

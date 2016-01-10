@@ -3,6 +3,7 @@ package com.example.work11;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class BankAccountDao {
 	private final static String TABLE_NAME = "bankaccount";
@@ -43,11 +44,23 @@ public class BankAccountDao {
 		ContentValues values =new ContentValues();
 		values.put(COL_NAME, name);
 		values.put(COL_MONEY, money);
-		return db.update(TABLE_NAME, values, COL_ID, new String[]{id});
+		return db.update(TABLE_NAME, values, COL_ID+" = ? ", new String[]{id});
 	}
 
 	public static Cursor queryAll(SQLiteDatabase db) {
 		return db.query(TABLE_NAME, null, null, null, null, null, null);
+	}
+
+	public static void logUsers(SQLiteDatabase db) {
+		Cursor cursor = queryAll(db);
+		
+		while(cursor.moveToNext()){
+			int id = cursor.getInt(0);
+			String name = cursor.getString(1);
+			Double money = cursor.getDouble(2);
+			
+			Log.d("MainActivity", " id = "+id+"; name = "+name+" money = "+money);
+		}
 	}
 	
 }
