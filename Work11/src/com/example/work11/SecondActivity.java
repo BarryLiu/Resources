@@ -13,8 +13,14 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
+/**
+ * 显示所有用户页面
+ *<br>用CursorAdapter 查询数据库
+ * @author Barry
+ *
+ */
 public class SecondActivity extends Activity{
+	
 	private SQLiteDatabase db;
 	
 	private ListView lv_users ;

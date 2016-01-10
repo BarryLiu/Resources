@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
 	private Button btn_addUser;
 	private Button btn_zhuanZhan;
 	private Button btn_users;
+	private Button btn_dictionary;
 	 private Button btn_userslog;
 	private ListView lv_history;
 
@@ -112,6 +113,20 @@ public class MainActivity extends Activity {
 		
 		//setShowLogLisenter();
 		
+		setBtnDictionaryLisenter();
+	}
+	/**跳到 词典页面 */
+	private void setBtnDictionaryLisenter() {
+		btn_dictionary.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//db.close();
+				
+				 Intent intent =new Intent();
+					intent.setClass(MainActivity.this,DictionaryActivity.class);
+					startActivity(intent); 
+			}
+		});
 	}
 	/**跳到SecondActivity	 */
 	private void setbtnTiaoZhuan() {
@@ -121,7 +136,6 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				 Intent intent =new Intent();
 				intent.setClass(MainActivity.this,SecondActivity.class);
-				
 				startActivity(intent); 
 			}
 		});
@@ -258,6 +272,7 @@ public class MainActivity extends Activity {
 		btn_addUser = (Button)findViewById(R.id.btn_addUser);
 		btn_zhuanZhan =(Button)findViewById(R.id.btn_zhuanZhan);
 		btn_users =(Button)findViewById(R.id.btn_queryUsers);
+		btn_dictionary =(Button)findViewById(R.id.btn_dictionary);
 		//btn_userslog =(Button)findViewById(R.id.btn_userslog);
 		lv_history =(ListView)findViewById(R.id.lv_history);
 	}
