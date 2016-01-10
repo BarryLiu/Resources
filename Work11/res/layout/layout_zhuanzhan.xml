@@ -11,15 +11,15 @@
         android:orientation="horizontal"
         >
         <TextView 
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="转账人id"
             />
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="转账人id"
             android:inputType="number"
+            android:hint="转账人id"
             android:id="@+id/et_payId"
             />
     </LinearLayout>
@@ -31,14 +31,14 @@
         android:orientation="horizontal"
         >
         <TextView 
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="转账人id"
+            android:text="收款人id"
             />
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="转账人id"
+            android:hint="收款人id"
             android:inputType="number"
             android:id="@+id/et_toId"
             />
@@ -52,7 +52,7 @@
         android:gravity="center"
         >
         <TextView 
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="转账金额"
             />

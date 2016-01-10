@@ -6,8 +6,10 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
 	private SQLiteDatabase db;
 	private Button btn_addUser;
 	private Button btn_zhuanZhan;
+	private Button btn_users;
 	private ListView lv_history;
 
 	@Override
@@ -43,7 +46,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		DBHelper helper =new DBHelper(MainActivity.this, "bank.db", null, 1);
+		DBHelper helper =new DBHelper(MainActivity.this, "bank2.db", null, 1);
 		db = helper.getWritableDatabase();
 		
 		initView();
@@ -54,7 +57,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void setAdapter() {
-		Cursor cursor=null;
+		Cursor cursor= BankHistoryDao.queryAll(db);
 		
 		//创建适配器
 		CursorAdapter adapter =new CursorAdapter(MainActivity.this,cursor,false) {
@@ -88,9 +91,9 @@ public class MainActivity extends Activity {
 				
 				tv_name.setText(cursor.getString(1));
 				tv_data.setText(cursor.getString(2));
-				tv_money.setText(cursor.getString(3));
+				 tv_money.setText(cursor.getString(3));
 				tv_phone.setText("123456");
-				tv_userid.setText(cursor.getString(4));
+				 tv_userid.setText(cursor.getString(4));
 			}
 		};
 		lv_history.setAdapter(adapter);
@@ -102,6 +105,18 @@ public class MainActivity extends Activity {
 		setAddUserLisenter();
 		// 点击转账跳到转账页面
 		setbtn_zhuanZhanLisenter();
+		
+		btn_users.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent =new Intent(MainActivity.this,SecondActivity.class);
+				
+				startActivity(intent);
+			}
+		});
+		
+		
 	}
 	/**
 	 * 点击转账跳到转账页面
@@ -116,11 +131,11 @@ public class MainActivity extends Activity {
 				final EditText et_toId = (EditText) vzz.findViewById(R.id.et_toId);
 				final EditText et_money = (EditText) vzz.findViewById(R.id.et_money);
 				
-				AlertDialog.Builder builder =new AlertDialog.Builder(MainActivity.this);
+				AlertDialog.Builder builder =new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_HOLO_LIGHT);
 				builder.setTitle("转账");
 				builder.setView(vzz);
-				builder.setPositiveButton("退出", null);
-				builder.setNegativeButton("确定", new OnClickListener() {
+				builder.setNegativeButton("退出", null);
+				builder.setPositiveButton("确定", new OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -175,7 +190,7 @@ public class MainActivity extends Activity {
 				final EditText et_name = (EditText) v2.findViewById(R.id.et_name);
 				final EditText et_money = (EditText) v2.findViewById(R.id.et_money);
 				
-				AlertDialog.Builder builder =new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_HOLO_DARK);
+				AlertDialog.Builder builder =new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder.setTitle("添加用户");
 				builder.setView(v2);
 				builder.setNegativeButton("取消", null);
@@ -191,13 +206,16 @@ public class MainActivity extends Activity {
 							showTips(MainActivity.this, "插入失败，姓名不能为空");
 							return;
 						}
-						Double money = Double.valueOf(moneyStr);
+						Double money = 0.0;
+						if(!moneyStr.isEmpty())
+							money=Double.valueOf(moneyStr);
+						
 						BankAccountDao.insert(db,name,money);
+						showTips(MainActivity.this, "插入成功");
 					}
 				} );
 				
 				builder.show();
-				
 			}
 		});
 	}
@@ -205,6 +223,7 @@ public class MainActivity extends Activity {
 	private void initView() {
 		btn_addUser = (Button)findViewById(R.id.btn_addUser);
 		btn_zhuanZhan =(Button)findViewById(R.id.btn_zhuanZhan);
+		btn_users =(Button)findViewById(R.id.btn_queryUsers);
 		lv_history =(ListView)findViewById(R.id.lv_history);
 	}
 

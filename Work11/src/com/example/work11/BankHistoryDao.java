@@ -1,6 +1,7 @@
 package com.example.work11;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class BankHistoryDao {
@@ -12,18 +13,13 @@ public class BankHistoryDao {
 	private static final String COL_USERID = "userid";
 
 	public static boolean createTable(SQLiteDatabase db) {
-		try{
-			db.execSQL("create table " + TABLE_NAME + " values( " + COL_ID
-					+ " integer autoincrement ," 
+			db.execSQL("create table " + TABLE_NAME + "( " + COL_ID
+					+ " integer primary key autoincrement ," 
 					+ COL_NAME + " varchar(20) , "
 					+ COL_DATA + " varchar(20) , "
 					+ COL_MONEY + " double ,"
 					+COL_USERID+ " integer )");
 			return true;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return false;
 	}
 
 	public static long insert(SQLiteDatabase db, String userId, Double money,
@@ -36,6 +32,11 @@ public class BankHistoryDao {
 		
 		return db.insert(TABLE_NAME, null, values);
 	}
-	
+
+	public static Cursor queryAll(SQLiteDatabase db) { 
+		return db.rawQuery(" select * from "+TABLE_NAME, null);
+	}
+
+ 	
 	
 }

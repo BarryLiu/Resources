@@ -43,8 +43,11 @@ public class BankAccountDao {
 		ContentValues values =new ContentValues();
 		values.put(COL_NAME, name);
 		values.put(COL_MONEY, money);
-
 		return db.update(TABLE_NAME, values, COL_ID, new String[]{id});
+	}
+
+	public static Cursor queryAll(SQLiteDatabase db) {
+		return db.query(TABLE_NAME, null, null, null, null, null, null);
 	}
 	
 }
