@@ -10,42 +10,45 @@ import java.util.List;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ExpandableListView;
 
-/**
- * ContentResolver:内容处理器
- * BaseExpandableListAdapter:   是 BaseExpandableListAdapter 的适配器的父接口
- * ContactManager :联系人管理器  :  用于查询联系人的数据库
- * @author Barry
- * 
- */
-public class MainActivity extends Activity {
-	private ContactManager manager;
+public class SecondActivity extends Activity {
+	private ContactManager2 manager ;
+	private ContactAdapter adapter;
+	private  List<ContactBean> beans;
+	
 	private ExpandableListView elv;
 	
-	//    ContactBean 有title，List<persion>
-	List<ContactBean> beans;
-	ContactAdapter adapter;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
+		setContentView(R.layout.activity_second);
+		
 		ContentResolver cr = getContentResolver();
-		manager = new ContactManager();
+		manager = new ContactManager2();
 		beans = manager.getContentList(cr);
-		//对beans里面的数据进行排序
+		
+		//排序
 		paixu();
-
-		adapter = new ContactAdapter(beans, MainActivity.this);
-		initContactList();
-
+	
+		//去掉父项中的空的
+		for (int i = 0; i < beans.size(); i++) {
+			if(beans.get(i).getChildList().size()==0){
+				beans.remove(i);
+				i--;
+			}
+		}
+		
+		adapter = new ContactAdapter(beans, SecondActivity.this);
+		elv = (ExpandableListView) findViewById(R.id.expandableListView1);
+		elv.setAdapter(adapter);
+		
+		for (int i = 0; i < beans.size(); i++) {
+			elv.expandGroup(i);
+		}
 	}
-
 	private void paixu() {
 		Collections.sort(beans.get(0).getChildList(), new Comparator<Person>() {
 
@@ -80,15 +83,5 @@ public class MainActivity extends Activity {
 		});
 	}
 
-	private void initContactList() {
-		elv = (ExpandableListView) findViewById(R.id.expandableListView1);
-		elv.setAdapter(adapter);
-	}
-	
-	public void toSecond(View v){
-		Intent intent =new Intent(MainActivity.this,SecondActivity.class);
-		
-		this.startActivity(intent);
-	}
 
 }

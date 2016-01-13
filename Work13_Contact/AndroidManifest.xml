@@ -8,7 +8,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
     <!-- 得到读取联系人权限 -->
-	<uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -22,6 +23,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="io.barryliu.work13_contact.SecondActivity"
+            android:label="@string/title_activity_second" >
         </activity>
     </application>
 
