@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -64,10 +65,10 @@ public class ContactManager2 {
 					name = data;
 				}
 			}
-//			c_data.close();//关闭资源
+ 			c_data.close();//关闭资源
 			Log.d("contact", " id " + id + " 姓名 " + name + " 电话" + tel);
 			Person person = new Person(name, tel);
-			 
+			 person.setId(id);
 			String[] arr = PinyinHelper.toHanyuPinyinStringArray(name.charAt(0));
 			char tit;
 			if(arr==null){
@@ -84,5 +85,25 @@ public class ContactManager2 {
 		}
 //		c_id.close();//关闭资源
 		return list;
+	}
+	
+	public static void updateConact(Person p ,ContentResolver cr){
+//		Uri uri_data = ContactsContract.Contacts.Data.
+		//AUTHORITY 主机
+		Uri uri_data =Uri.parse( "content://"+ContactsContract.AUTHORITY+"/data");
+		
+		
+		//更新电话
+		ContentValues values =new ContentValues();
+		values.put("data1", p.getName());
+		cr.update(uri_data, values," raw_contact_id  = ? and mimetype_id = ? ",new String[]{p.getId()+"","7"});
+		
+		//更新名字
+		ContentValues values1 = new ContentValues();
+	    values1.put("data1", p.getTel());
+	    //update
+	    cr.update(uri_data,values1,"raw_contact_id = ? and mimetype_id = ?",new String[]{
+	                p.getId()+"",
+	                5+""});
 	}
 }
