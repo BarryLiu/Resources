@@ -47,6 +47,7 @@ public class EditActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				setResult(RESULT_OK,null);
 				finish();
 			}
 		});
