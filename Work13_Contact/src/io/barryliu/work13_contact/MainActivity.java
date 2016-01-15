@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
 	List<ContactBean> beans;
 	ContactAdapter adapter;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

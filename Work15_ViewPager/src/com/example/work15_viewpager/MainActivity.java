@@ -52,13 +52,8 @@ public class MainActivity extends Activity {
 		vp = (ViewPager) findViewById(R.id.vp);
 
 		// 1获取数据
-		View v1 = getLayoutInflater().inflate(R.layout.layout_1, null);
-		View v2 = getLayoutInflater().inflate(R.layout.activity_second, null);
-		View v3 = getLayoutInflater().inflate(R.layout.layout_3, null);
-
-		list.add(v1);
-		list.add(v2);
-		list.add(v3);
+	
+		
 
 		// 2.创建适配器
 		MyAdapter adapter = new MyAdapter();
@@ -67,7 +62,6 @@ public class MainActivity extends Activity {
 		vp.setAdapter(adapter);
 
 		
-		initView();
 
 		initContactView("");
 
@@ -87,13 +81,29 @@ public class MainActivity extends Activity {
 	}
 
 	private void initView() {
+		//得到  群组、联系人、收藏的layout布局 
+		View v1 = getLayoutInflater().inflate(R.layout.layout_1, null);
+		View v2 = getLayoutInflater().inflate(R.layout.activity_second, null);
+		View v3 = getLayoutInflater().inflate(R.layout.layout_3, null);
+		list.add(v1);
+		list.add(v2);
+		list.add(v3);
+		
+		//得到上面的点击后显示的白线 (TextView)
 		listLines = new ArrayList<TextView>();
 		for (int i = 0; i < listLineIds.length; i++) {
 			TextView tv = (TextView) findViewById(listLineIds[i]);
 			listLines.add(tv);
 		}
+		//得到上面的栏目的容器(RadioGroup)
 		rg = (RadioGroup) findViewById(R.id.rg);
+		//得到第联系人页面的搜索框
 		searchView = (SearchView) list.get(1).findViewById(R.id.searchView);
+		
+		
+		//得到下面的控件()
+		
+		
 	}
 
 
