@@ -1,6 +1,7 @@
 package com.example.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,6 +18,10 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class LeftFragment extends Fragment {
+	interface Editer {
+		void setContent(String content);
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,16 +49,22 @@ public class LeftFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				int status = getResources().getConfiguration().orientation;
-				
-				
+
 				if (status == Configuration.ORIENTATION_LANDSCAPE) {// 是横屏
-					TextView tv_text = (TextView) getActivity().findViewById(R.id.tv_text);
-					tv_text.setText("第"+position+"章的内容");
-					
+					/*
+					 * TextView tv_text = (TextView)
+					 * getActivity().findViewById(R.id.tv_text);
+					 * tv_text.setText("第"+position+"章的内容");
+					 */
+
+					IGetContent icc = (IGetContent) getActivity();
+					icc.setContent("第" + position + "章的内容");
+
 				} else { // 竖屏
-					Intent intent =new Intent(getActivity(),ContentActivity.class);
-					intent.putExtra("content", "第"+position+"章的内容");
-					
+					Intent intent = new Intent(getActivity(),
+							ContentActivity.class);
+					intent.putExtra("content", "第" + position + "章的内容");
+
 					startActivity(intent);
 				}
 			}
