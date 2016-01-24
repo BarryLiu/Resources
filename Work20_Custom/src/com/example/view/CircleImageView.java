@@ -18,6 +18,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * 图片控件   画出圆形的图片
+ * @author Barry
+ *
+ */
 public class CircleImageView extends View {
 	Bitmap bm;
 	Path path;
