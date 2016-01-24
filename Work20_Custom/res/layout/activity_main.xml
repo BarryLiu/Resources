@@ -5,18 +5,31 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <Button 
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+          <Button 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SecondActivity"
+        android:text="Second"
         android:onClick="toSecond"
         />
     <Button 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ThreeActivity"
+        android:text="Three"
         android:onClick="toThree"
         />
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Four"
+        android:onClick="toFour"
+        />
+    </LinearLayout>
+  
     <TextView 
            android:layout_width="wrap_content"
             android:layout_height="wrap_content"

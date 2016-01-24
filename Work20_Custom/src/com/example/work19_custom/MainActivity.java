@@ -23,4 +23,8 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(MainActivity.this, ThreeActivity.class);
 		startActivity(intent);
 	}
+	public void toFour(View v) {
+		Intent intent = new Intent(MainActivity.this, FourActivity.class);
+		startActivity(intent);
+	}
 }
