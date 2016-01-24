@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ 	android:orientation="vertical"
+    tools:context=".ThreeActivity" >
+
+  
+    <com.example.view.ChartView
+        android:id="@+id/chartView1"
+        android:layout_width="wrap_content"
+        android:layout_height="346px"
+        android:layout_marginTop="14dp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取新的数据" 
+        android:onClick="getJson"
+        />
+</LinearLayout>

@@ -13,10 +13,14 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 	}
 
-	public void toSecond(View v){
-		Intent intent =new Intent(MainActivity.this,SecondActivity.class);
-		
+	public void toSecond(View v) {
+		Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+
 		startActivity(intent);
 	}
 
+	public void toThree(View v) {
+		Intent intent = new Intent(MainActivity.this, ThreeActivity.class);
+		startActivity(intent);
+	}
 }
