@@ -1,6 +1,9 @@
 package com.example.work22_animation;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -89,5 +92,28 @@ public class SecondActivity extends Activity {
 	private void jump(){
 		Intent  intent =new Intent(SecondActivity.this, MainActivity.class);
 		startActivity(intent);
+	}
+	
+	//鼠标的点击    实现属性动画的效果
+	public void show(View v){
+		 FragmentManager fm = getFragmentManager();
+	        Fragment fragment = fm.findFragmentById(R.id.right_content);
+
+	        FragmentTransaction ft = fm.beginTransaction();
+	        if(fragment.isHidden()){
+	            //自带动画
+	           // ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+	            //自定义动画
+	            ft.setCustomAnimations(
+	                    R.animator.fragmet_open,//进来的
+	                    R.animator.fragmet_open);//出去的动画
+
+	            ft.show(fragment);
+	        }else{
+	          //  ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+
+	            ft.hide(fragment);
+	        }
+	        ft.commit();
 	}
 }

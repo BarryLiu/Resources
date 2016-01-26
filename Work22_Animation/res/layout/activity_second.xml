@@ -36,4 +36,25 @@
 		android:background="@drawable/loading"
 		android:layout_below="@id/iv_scanning"
         />
+    
+    
+     <fragment
+        android:id="@+id/right_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        class="com.example.work22_animation.RightFragment"
+        android:layout_alignParentRight="true"
+        android:layout_height="match_parent">
+    </fragment>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示"
+        android:onClick="show"
+        android:id="@+id/button6"
+        android:layout_below="@+id/button4"
+        android:layout_alignLeft="@+id/button4"
+        android:layout_alignStart="@+id/button4" />
 </RelativeLayout>
