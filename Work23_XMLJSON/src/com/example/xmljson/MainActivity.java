@@ -20,7 +20,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * 用xml解析student.xml中的数据和SharedPreferences中的读取与存储
+ * @author Barry
+ *
+ */
 public class MainActivity extends Activity {
 
 	private EditText editText;
@@ -39,6 +43,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void readShared() {
+		////从之前数据中读取
 		SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
 		String content = sp.getString("content", "");
 		editText.setText(content);
@@ -69,27 +74,33 @@ public class MainActivity extends Activity {
 	 * pull 解析器解读 students.xml
 	 */
 	private void testPullParser() {
+		 //获取xml的解析器
 		XmlPullParser xmlParser = Xml.newPullParser();
 		try {
 			InputStream is = getAssets().open("students.xml");
 			xmlParser.setInput(is, "utf-8");
-
+			//获取第一个标签
 			int type = xmlParser.getEventType();
 			Student student = null;
 			List<Student> list = new ArrayList<Student>();
 
 			while (type != XmlPullParser.END_DOCUMENT) {
+				 //判断type是什么
 				switch (type) {
 				case XmlPullParser.START_TAG://开始读标签
+					 //判断当前标签的名字
 					String name = xmlParser.getName();
 					String text = "";
 					if ("student".equals(name)) {
+					    //创建出一个student
 						student = new Student();
 						text  = xmlParser.getAttributeValue(0);
+						//获取person的id
 						student.setId(Integer.parseInt(text));
 					} else if ("name".equals(name)) {
+						 //移动到下一个tag
 						xmlParser.next();
-						
+						//获取数值
 						student.setName(text);
 					} else if ("age".equals(name)) {
 						xmlParser.next();
