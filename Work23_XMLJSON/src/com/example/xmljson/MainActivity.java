@@ -10,7 +10,10 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.example.json.SecondActivity;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -130,4 +133,11 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	
+	//跳到secondActivity
+	public void toSecond(View v){
+		Intent intent =new Intent(MainActivity.this,SecondActivity.class);
+
+		startActivity(intent);
+	}
 }
