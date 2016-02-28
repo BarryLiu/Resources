@@ -24,22 +24,27 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.huc.R;
 
+/**
+ * å¾—åˆ°æ•°æ®ç”¨  ListViewæ˜¾ç¤º
+ * @author Barry
+ *
+ */
 public class SecondActivity extends Activity {
-	public static final String path = "http://192.168.1.103:8080/Http1/getJsonServlet";
+	public static final String path = "http://192.168.8.14:8080/Http1/getJsonServlet";
 	private ListView listView;
 
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			// Õû¸öÍøÒ³µÄÄÚÈİ ÓĞ±êÌâ ÓĞÕıÎÄ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			String string = msg.obj.toString();
-			// Ö»ÒªÕıÎÄÄÚÈİ ÊÇjson ¸ñÊ½µÄÊı¾İ £¬ ĞèÒª½âÎö
+			// Ö»Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½json ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 			String str = Html.fromHtml(string).toString();
-
 			try {
-				// ½âÎöÊı¾İ
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				JSONArray array = new JSONArray(str);
 				List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 				for (int i = 0; i < array.length(); i++) {
@@ -53,7 +58,7 @@ public class SecondActivity extends Activity {
 
 					data.add(map);
 				}
-				// ÉèÖÃÊÊÅäÆ÷
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				SimpleAdapter adapter = new SimpleAdapter(SecondActivity.this,
 						data, R.layout.lv_item,
 						new String[] { "str", "image" }, new int[] {
@@ -75,7 +80,7 @@ public class SecondActivity extends Activity {
 		listView = (ListView) findViewById(R.id.listView);
 	}
 
-	// ¸ù¾İ ·şÎñÆ÷µÄÁ¬½ÓµÃµ½jsonÊı¾İ ·Åµ½ ListViewÖĞ
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ÓµÃµï¿½jsonï¿½ï¿½ï¿½ ï¿½Åµï¿½ ListViewï¿½ï¿½
 	public void click1(View v) {
 		new Thread() {
 			public void run() {
@@ -88,9 +93,8 @@ public class SecondActivity extends Activity {
 					String line = "";
 					StringBuffer sb = new StringBuffer();
 					while ((line = br.readLine()) != null) {
-						sb.append(br);
+						sb.append(line);
 					}
-
 					Message msg = handler.obtainMessage();
 					msg.obj = sb.toString();
 

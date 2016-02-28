@@ -21,16 +21,16 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * ´Ó·şÎñÆ÷ÖĞµÃµ½Êı¾İ
+ * ç®€å•çš„ä»æœåŠ¡å™¨å¾—åˆ°æ•°æ®
  *   
  * @author Barry
  */
 public class MainActivity extends Activity {
 
 	private TextView textView;
-	public static final String path = "http://192.168.1.103:8080/Http1/";
+	public static final String path = "http://192.168.8.14:8080/Http1/";
 	
-	//µÃµ½Êı¾İºó£¬ Ë¢ĞÂ½çÃæ
+	//handleræ”¹å˜UIç•Œé¢
 	Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			String str= (String) msg.obj;
@@ -49,19 +49,19 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		textView = (TextView) findViewById(R.id.textView);
 	}
-	//µã»÷Á´½Ó µ½·şÎñÆ÷ Ö±½Ó°Ñ·Å»ØµÄ×Ö·û´®ÉèÖÃµ½TextViewÖĞ
+	//ç‚¹å‡»button æŒ‰é’®
 	public void click1(View v){
 
-		//²»ÄÜÔÙÖ÷Ïß³ÌÖĞÖ±½Ó·¢ËÍÇëÇó £¬
+		//ä¸èƒ½ä»ä¸»çº¿ç¨‹å‘é€ç½‘ç»œæ•°æ®
 		Thread thread = new Thread(){
 			public void run() {
 				try {
-					//Á¬½Ó
+					//åˆ›å»ºUrlè¯·æ±‚
 					URL url = new URL(path);
 					URLConnection conn = url.openConnection();
 					InputStream is = conn.getInputStream();
 					
-					//½«µÃµ½µÄ²ÎÊı×ª»»³É×Ö·û´®
+					//æ¥æ”¶æ•°æ®
 					BufferedReader br =new BufferedReader(new InputStreamReader(is));
 					StringBuffer sb =new StringBuffer();
 					String line  = "";
@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 						sb.append(line);
 					}
 					
-					//×ÓÏß³Ì²»ÄÜË¢ĞÂUI½çÃæ  £¬ ·¢ËÍ ÇëÇóµÀHandler ÔÚhandlerMessageÖĞË¢ĞÂ½çÃæ
+					//æ•°æ®ä¼ é€’åˆ°hander é‡Œé¢   ç”¨ handlerMassage çš„æ–¹æ³•å¾—åˆ°Uiæ˜¾ç¤ºå‡ºæ¥
 					Message msg = handler.obtainMessage();
 					msg.obj = sb.toString();
 					handler.sendMessage(msg);
