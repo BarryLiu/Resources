@@ -15,4 +15,13 @@ public class Util {
 		return file;
 	}
 
+	public static void clearFile() {
+		File sdCardFold = Environment.getExternalStorageDirectory();
+		File imageCacheFolder = new File(sdCardFold, "imageCacheDir");
+
+		File[] fileList = imageCacheFolder.listFiles();
+		for (int i = 0; i < fileList.length; i++) {
+			fileList[i].delete();
+		}
+	}
 }
