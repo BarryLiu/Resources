@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import com.example.Util;
+import com.example.four.FourActivity;
 import com.example.three.ThreeActivity;
 import com.example.two.SecondActivity;
 
@@ -90,7 +91,9 @@ public class MainActivity extends Activity {
 	public void click3(View v){
 		Intent intent = new Intent(MainActivity.this,ThreeActivity.class);
 		startActivity(intent);
-		
 	}
-
+	public void click4(View v){
+		Intent intent = new Intent(MainActivity.this,FourActivity.class);
+		startActivity(intent);
+	}
 }
