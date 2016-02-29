@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ 	android:orientation="vertical"
+    tools:context=".ThreeActivity" >
+
+   <Button 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:onClick="click1"
+       android:text="loadding..."
+       />
+   <TextView 
+       android:id="@+id/tv_tips"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="普通图片加载，有重复下载问题"
+       />
+   <ListView 
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/listView"
+       ></ListView>
+   
+
+</LinearLayout>

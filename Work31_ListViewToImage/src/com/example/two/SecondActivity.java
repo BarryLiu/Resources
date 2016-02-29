@@ -24,17 +24,16 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
+import com.example.DataBean;
+import com.example.Util;
 import com.example.huc.R;
-
-/**
- * 得到数据用  ListView显示
- * @author Barry
- *
+/*
+ *  得到数据用  ListView显示 
+ *  显示的图片 是从网络上得到的    没有用到图片的三级缓存();
  */
 public class SecondActivity extends Activity {
-	public static final String path = "http://192.168.8.14:8080/Http1/getJsonServlet";
+	
 	private ListView listView;
 
 	Handler handler = new Handler() {
@@ -43,26 +42,23 @@ public class SecondActivity extends Activity {
 			String string = msg.obj.toString();
 			//转换json格式
 			String str = Html.fromHtml(string).toString();
+
 			try {
 				// 定义 json数组装载数据
 				JSONArray array = new JSONArray(str);
-				List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+				
+				List<DataBean> data =new ArrayList<DataBean>();
+				
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject obj = array.getJSONObject(i);
 					String param1 = obj.getString("str");
 					String param2 = obj.getString("image");
 
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("str", param1);
-					map.put("image", param2);
-
-					data.add(map);
+					DataBean dBean=new DataBean(param1, param2);
+					data.add(dBean);
 				}
-				// 创建 适配器
-				SimpleAdapter adapter = new SimpleAdapter(SecondActivity.this,
-						data, R.layout.lv_item,
-						new String[] { "str", "image" }, new int[] {
-								R.id.textView1, R.id.textView2 });
+				// 得到 适配器的对象
+				DataAdapter adapter  =new DataAdapter(SecondActivity.this, data); 
 				listView.setAdapter(adapter);
 
 			} catch (JSONException e) {
@@ -84,7 +80,7 @@ public class SecondActivity extends Activity {
 		new Thread() {
 			public void run() {
 				try {
-					URL url = new URL(path);
+					URL url = new URL(Util.path+"getJsonServlet");
 					URLConnection conn = url.openConnection();
 					InputStream is = conn.getInputStream();
 					BufferedReader br = new BufferedReader(
@@ -94,6 +90,7 @@ public class SecondActivity extends Activity {
 					while ((line = br.readLine()) != null) {
 						sb.append(line);
 					}
+
 					Message msg = handler.obtainMessage();
 					msg.obj = sb.toString();
 
