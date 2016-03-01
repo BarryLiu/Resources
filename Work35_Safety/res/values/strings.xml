@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Work35_MD5</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_md5">MD5Activity</string>
+    <string name="title_activity_aes">AesActivity</string>
+    <string name="title_activity_rsa">RsaActivity</string>
+
+</resources>
