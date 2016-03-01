@@ -24,6 +24,7 @@ import android.os.Environment;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -31,12 +32,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	public static final String PATH = "http://192.168.1.103:8080/Http1/";
+
 	int downMax;
+	int downLength;
+	int fileLength;
+	
 	private ProgressBar pb;
 	private TextView tvProgress;
 
 	boolean isDowning = true;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,8 +55,10 @@ public class MainActivity extends Activity {
 	DownTask task;
 
 	public void download(View v) {
+
 		GetVersionTask gvt = new GetVersionTask();
 		gvt.execute();
+
 	}
 
 	class DownTask extends AsyncTask {
@@ -60,36 +67,32 @@ public class MainActivity extends Activity {
 		protected Object doInBackground(Object... params) {
 
 			try {
-				URL url = new URL("");
+				String path = PATH + "apk/FastJsonProject.apk";
+				URL url = new URL(path);
 
 				HttpURLConnection conn = (HttpURLConnection) url
 						.openConnection();
 				InputStream is = conn.getInputStream();
 
-                //在继续下载的时候要设置头文件
-                //只有在继续下载的时候才设置
+				// 在继续下载的时候要设置头文件
+				// 只有在继续下载的时候才设置
 				File file = new File(Environment.getExternalStorageDirectory(),
 						"file.apk");
 				RandomAccessFile raf = new RandomAccessFile(file, "rw");
 
-				
-
-				if (downMax > 0) { // //移动到当前位置
+				if (downMax > 0) { // 移动到当前位置
 					conn.setRequestProperty("Range", "bytes=" + downMax);
 					raf.seek(downMax);
 				} else {
 					int length = conn.getContentLength();
 					publishProgress(length, 0);
-					 //获取下载内容的长度
+					// 获取下载内容的长度
 					downMax = length;
 				}
 
 				int len = -1;
 				byte[] buffer = new byte[1024];
 
-				
-
-			
 				OutputStream os = new FileOutputStream(file);
 				while ((len = is.read(buffer)) != -1) {
 					if (!isDowning) { // 没有下载了
@@ -105,20 +108,18 @@ public class MainActivity extends Activity {
 				is.close();
 				return "下载成功";
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			return "下载成功2";
+			return "下载失败";
 		}
 
 		/**
-         * 在主线程调用，用于在下载的过程中更新ui
-         * @param values
-         */
+		 * 在主线程调用，用于在下载的过程中更新ui
+		 * 
+		 * @param values
+		 */
 		@Override
 		protected void onProgressUpdate(Object... values) {
 			// TODO Auto-generated method stub
@@ -137,14 +138,13 @@ public class MainActivity extends Activity {
 
 			Toast.makeText(MainActivity.this, result.toString(),
 					Toast.LENGTH_SHORT).show();
-			//判断文件的大小是否完整
+			// 判断文件的大小是否完整
 			if (pb.getMax() == pb.getProgress()) {
-
-				   //自动安装
+				// 自动安装
 				Intent intent = new Intent();
-				//指定动作
+				// 指定动作
 				intent.setAction(Intent.ACTION_VIEW);
-                //指定数据
+				// 指定数据
 				File file = new File(Environment.getExternalStorageDirectory(),
 						"file.apk");
 				intent.setDataAndType(Uri.fromFile(file),
@@ -172,7 +172,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected Object doInBackground(Object... params) {
 			try {
-				URL url = new URL("");
+				URL url = new URL(PATH+"getVersionServlet");
 
 				HttpURLConnection conn = (HttpURLConnection) url
 						.openConnection();
@@ -182,34 +182,36 @@ public class MainActivity extends Activity {
 				String line = br.readLine();
 				JSONObject obj = new JSONObject(line);
 
-				return obj.getInt("version");
+				return obj.getInt("versionCode");
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return -1;
 		}
-
 		@Override
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
 			try {
-				int currVersion= getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+				int currVersion = getPackageManager().getPackageInfo(
+						getPackageName(), 0).versionCode;
 				int serverVersion = (Integer) result;
-				if (currVersion<serverVersion) {
+				if (currVersion < serverVersion) {
 					task = new DownTask();
-					task.execute(task);
-				}else{
-					Toast.makeText(MainActivity.this, "已经是最新版本了", Toast.LENGTH_SHORT).show();
+					task.execute();
+				} else {
+					Toast.makeText(MainActivity.this, "已经是最新版本了",
+							Toast.LENGTH_SHORT).show();
 				}
 			} catch (NameNotFoundException e) {
 				e.printStackTrace();
 			}
+			
 		}
+		
 
 	}
 }
