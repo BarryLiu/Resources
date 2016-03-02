@@ -1,19 +1,20 @@
-#36_7µÚÈı·½ÍøÂç¿ò¼Ü
-#µÚÈı·½ÍøÂç¿ò¼Ü
+#36_7ç¬¬ä¸‰æ–¹ç½‘ç»œæ¡†æ¶
+#
+#ç¬¬ä¸‰æ–¹ç½‘ç»œæ¡†æ¶
 - okHttp + Volley
 
 ##okHttp
-- ÓÃÓÚÈ¡´úHttpClient
-- ÈçºÎµ¼Èë,ºÍÅäÖÃ
-###´ÓÍøÂç»ñÈ¡JSON
+- ç”¨äºå–ä»£HttpClient
+- å¦‚ä½•å¯¼å…¥,å’Œé…ç½®
+###ä»ç½‘ç»œè·å–JSON
 
-         //´´½¨Ò»¸öokHttpClient
+         //åˆ›å»ºä¸€ä¸ªokHttpClient
         OkHttpClient okHttpClient = new OkHttpClient();
-        //´´½¨Ò»¸örequestÇëÇó
+        //åˆ›å»ºä¸€ä¸ªrequestè¯·æ±‚
         Request request = new Request.Builder().url(url).build();
-        //´´½¨Ò»¸öCall
+        //åˆ›å»ºä¸€ä¸ªCall
         Call call = okHttpClient.newCall(request);
-        //·¢ËÍCall
+        //å‘é€Call
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -35,28 +36,28 @@
             }
         });
 
-###´ÓListViewÍøÂç»ñÈ¡µÄÍ¼Æ¬
-- okHttp²¢Ã»ÓĞÌá¹©»ñÈ¡¶àÍ¼Æ¬µÄ½â¾ö·½·¨,Ê¹ÓÃVolley
+###ä»ListViewç½‘ç»œè·å–çš„å›¾ç‰‡
+- okHttpå¹¶æ²¡æœ‰æä¾›è·å–å¤šå›¾ç‰‡çš„è§£å†³æ–¹æ³•,ä½¿ç”¨Volley
 
         InputStream is = response.body().byteStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(is);
              
-###Ê¹ÓÃVolley½â¾ö¶àÍ¼Æ¬ÏÔÊ¾ÎÊÌâ
-- ÔÚAdapterÊÇÊ¹ÓÃVolleyÖĞÌá¹©µÄImageLoaderÀà¿ÉÒÔÖ±½Ó¼ÓÔØÍ¼Æ¬
+###ä½¿ç”¨Volleyè§£å†³å¤šå›¾ç‰‡æ˜¾ç¤ºé—®é¢˜
+- åœ¨Adapteræ˜¯ä½¿ç”¨Volleyä¸­æä¾›çš„ImageLoaderç±»å¯ä»¥ç›´æ¥åŠ è½½å›¾ç‰‡
 
             imageLoader = new ImageLoader(queue, new ImageLoader.ImageCache() {
-            //»ñÈ¡»º´æÖĞµÄÍ¼Æ¬
+            //è·å–ç¼“å­˜ä¸­çš„å›¾ç‰‡
             @Override
             public Bitmap getBitmap(String s) {
                 return lruCache.get(s);
             }
-            //½«Í¼Æ¬·ÅÈëµ½»º´æÖĞ
+            //å°†å›¾ç‰‡æ”¾å…¥åˆ°ç¼“å­˜ä¸­
             @Override
             public void putBitmap(String s, Bitmap bitmap) {
                 lruCache.put(s,bitmap);
             }
         });
-- imageLoad²¢Ã»ÓĞÌá¹©»º´æ,ĞèÒªÖ±½ÓÊµÏÖÒ»¸ölruCache»º´æ
+- imageLoadå¹¶æ²¡æœ‰æä¾›ç¼“å­˜,éœ€è¦ç›´æ¥å®ç°ä¸€ä¸ªlruCacheç¼“å­˜
 
         static LruCache<String,Bitmap> lruCache = new LruCache<String,Bitmap>(1024*1024*4){
         @Override
@@ -64,12 +65,12 @@
             return value.getRowBytes()*value.getHeight();
         }
     };
-- ÔÚgetViewÖĞÖ±½Ó½øĞĞ»ñÈ¡,»ñÈ¡µÄÊ±ºòĞèÒªÊ¹ÓÃtagÀ´½â¾öÍ¼Æ¬ÂÒÌøµÄÎÊÌâ
+- åœ¨getViewä¸­ç›´æ¥è¿›è¡Œè·å–,è·å–çš„æ—¶å€™éœ€è¦ä½¿ç”¨tagæ¥è§£å†³å›¾ç‰‡ä¹±è·³çš„é—®é¢˜
 
             imageLoader.get(imageUrl, new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                //»ñÈ¡µ½·µ»ØµÄÍ¼Æ¬µÄµØÖ·ÊÇ·ñºÍimageViewµÄÒ»Ñù
+                //è·å–åˆ°è¿”å›çš„å›¾ç‰‡çš„åœ°å€æ˜¯å¦å’ŒimageViewçš„ä¸€æ ·
                 String srcUrl = (String) iv.getTag();
                 String returnUrl = imageContainer.getRequestUrl();
                 if(srcUrl.equals(returnUrl)){
@@ -82,15 +83,18 @@
 
             }
         });
-- Èç¹ûÒªÊ¹ÓÃÎÄ¼ş»º´æµÄ»°£¬ĞèÒªÔÚ·µ»ØµÄhttpµÄÍ·ÖĞÉèÖÃCache-controlÊôĞÔ¿ØÖÆ»º´æµÄÊ±¼ä
+- å¦‚æœè¦ä½¿ç”¨æ–‡ä»¶ç¼“å­˜çš„è¯ï¼Œéœ€è¦åœ¨è¿”å›çš„httpçš„å¤´ä¸­è®¾ç½®Cache-controlå±æ€§æ§åˆ¶ç¼“å­˜çš„æ—¶é—´
 
     	response.addHeader("Cache-Control", "max-age=100");
 
 
 
-queue:¶ÓÁĞ
+queue:é˜Ÿåˆ—
 
 
 
 
 - Xutils3
+
+
+
