@@ -32,7 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	public static final String PATH = "http://192.168.1.103:8080/Http1/";
+	public static final String PATH = "http://192.168.8.14:8080/Http1/";
 
 	int downMax;
 	int downLength;
