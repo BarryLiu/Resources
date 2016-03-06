@@ -1,5 +1,7 @@
 #38_20material design
 
+##安卓5.0新出来特性
+
 #TextInputLayout
 - 包括了一个EditText控件
 - 里面的EditText使用setError();会弹出提示框
