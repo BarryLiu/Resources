@@ -1,0 +1,26 @@
+﻿# Site settings
+name: Android Draft
+email: xxxxxx@outlook.com
+author: Barry
+url: http://www.itaren.com
+resume_site: http://itaren.com
+github: https://github.com/barryliu/
+baseurl: "/Resources"
+description: Notes recorded long ago and long ago
+meta_description: 
+motto: 很久以前很久以前记录的笔记,简单整理一下
+banner: 很久以前很久以前记录的笔记,简单整理一下,便于以后自己看,技术落后已经没有查看价值
+
+#permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
+paginate: 10
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
+
+github_username: barryliu
+
+# Build settings
+markdown: kramdown
+
+baidu_analysis: #
+
